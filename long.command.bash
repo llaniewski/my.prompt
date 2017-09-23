@@ -3,8 +3,8 @@
 # Script which allow to print notice after a long running command
 #
 
-LONG_COMMAND=1
-VERY_LONG_COMMAND=1
+LONG_COMMAND=10
+VERY_LONG_COMMAND=30
 
 function long_command_start {
 	[ -n "$COMP_LINE" ] && return  # do nothing if completing
