@@ -13,12 +13,10 @@ The `pushbullet.bash` file provides a **very** simple bash function to show noti
 To use it, just install the PushBullet app on your phone, and **generate a token** on the PushBullet page. Then set `PB_TOKEN` env variable with this token.
 
 ## Usage in console
+### Nice prompt
 Just add the following lines to your `.bashrc`:
 ```bash
-export PB_TOKEN=...your token...
 source .../my.prompt.bash
-source .../pushbullet.bash
-source .../long.command.bash
 ```
 
 You will get a nice bash prompt, displaying:
@@ -28,6 +26,13 @@ You will get a nice bash prompt, displaying:
 - (if you are in a git repo) identifier of the commit you are on, and the branch
 
 ### Long command
+Just add the following lines to your `.bashrc`:
+```bash
+export PB_TOKEN=...your token...
+source .../pushbullet.bash
+source .../long.command.bash
+```
+
 Then if you execute something which takes a longer time (LONG_COMMAND env variable) you will get a notice after it:
 
 ![Notification](https://raw.githubusercontent.com/llaniewski/my.prompt/pictures/kons1.gif)
