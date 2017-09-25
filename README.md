@@ -41,6 +41,11 @@ And if the command will take a **lot** of time to execute (VERY_LONG_COMMAND env
 
 ![Notification](https://raw.githubusercontent.com/llaniewski/my.prompt/pictures/kom1.gif)
 
+### Exceptions:
+There is not apparent way for the console to know **why** a command took a lot of time. Maybe it was an text editor!
+
+That is why in the `long.command.bash` file exceptions have to be added manually. If somebody have a better idea - please pull request.
+
 ## Usage in scripts
 The `pushbullet.bash` file can be also usefull in scripts (for instance PBS or SLURM batch works). You can use it like this:
 ```bash
