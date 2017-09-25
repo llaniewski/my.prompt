@@ -44,7 +44,13 @@ And if the command will take a **lot** of time to execute (VERY_LONG_COMMAND env
 ### Exceptions:
 There is not apparent way for the console to know **why** a command took a lot of time. Maybe it was an text editor!
 
-That is why in the `long.command.bash` file exceptions have to be added manually. If somebody have a better idea - please pull request.
+You can add exceptions in the LONG_COMMAND_EXCEPTIONS env variable, separated by `|`.
+
+```bash
+LONG_COMMAND_EXCEPTIONS="$LONG_COMMAND_EXCEPTIONS|gedit|paraview"
+```
+
+There is also a LONG_COMMAND_PATTERN, which is a `grep -E` pattern to check for exceptions, if you want to define a complex one.
 
 ## Usage in scripts
 The `pushbullet.bash` file can be also usefull in scripts (for instance PBS or SLURM batch works). You can use it like this:
