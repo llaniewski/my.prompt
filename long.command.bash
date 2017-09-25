@@ -7,6 +7,7 @@ LONG_COMMAND=10
 VERY_LONG_COMMAND=30
 
 function long_command_start {
+	pb_clear
 	[ -n "$COMP_LINE" ] && return  # do nothing if completing
 	[ "$BASH_COMMAND" = "$PROMPT_COMMAND" ] && return # don't cause a preexec for $PROMPT_COMMAND        
 	if [ -z "$BEFORE_SECONDS" ]
@@ -19,6 +20,7 @@ function long_command_start {
 }
 
 function long_command_finish {
+	pb_clear
 	EC=$?
 	SEC="0"
 	[ -z "$BEFORE_SECONDS" ] && return

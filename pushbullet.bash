@@ -1,5 +1,7 @@
 #!/bin/bash
 
+
+
 function pb_msg {
 if test -z "$PB_TOKEN"
 then
@@ -13,14 +15,7 @@ BODY="$(echo "$@" | sed 's/"/\\"/g')"
 
 TMP=$(tempfile)
 
-if ! test -z "$PB_LAST"
-then
-curl -s --header "Access-Token: $PB_TOKEN" \
-	--header "Content-Type: application/json" \
-	--data-binary '{"dismissed":true}' \
-	--request POST \
-	https://api.pushbullet.com/v2/pushes/$PB_LAST >$TMP
-fi
+pb_clear
 
 curl -s --header "Access-Token: $PB_TOKEN" \
 	--header "Content-Type: application/json" \
@@ -41,3 +36,19 @@ rm $TMP
 export PB_LAST
 }
 
+function pb_clear {
+if ! test -z "$PB_LAST"
+then
+if test -z "$PB_TOKEN"
+then
+	>&2 echo "PushBullet: No PB token"
+	return -1
+fi
+curl -s --header "Access-Token: $PB_TOKEN" \
+	--header "Content-Type: application/json" \
+	--data-binary '{"dismissed":true}' \
+	--request POST \
+	https://api.pushbullet.com/v2/pushes/$PB_LAST >$TMP
+PB_LAST=""
+fi
+}
