@@ -36,6 +36,7 @@ function long_command_finish {
 		joe*);;
 		vi*);;
 		ssh*);;
+		"git commit*");;
 		*)
 			FIN="Finished"
 			[ $EC -ne 0 ] && FIN="Failed"
