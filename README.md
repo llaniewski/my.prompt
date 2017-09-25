@@ -41,7 +41,7 @@ And if the command will take a **lot** of time to execute (VERY_LONG_COMMAND env
 
 ![Notification](https://raw.githubusercontent.com/llaniewski/my.prompt/pictures/kom1.gif)
 
-### Exceptions:
+#### Exceptions
 There is not apparent way for the console to know **why** a command took a lot of time. Maybe it was an text editor!
 
 You can add exceptions in the LONG_COMMAND_EXCEPTIONS env variable, separated by `|`.
