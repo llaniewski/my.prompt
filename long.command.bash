@@ -5,6 +5,7 @@
 
 LONG_COMMAND=10
 VERY_LONG_COMMAND=30
+LONG_COMMAND_EXCEPTIONS="joe|vi|ssh|git commit"
 
 function long_command_start {
 	pb_clear
@@ -32,17 +33,13 @@ function long_command_finish {
 	fi
 	if [ "$SEC" -gt "$VERY_LONG_COMMAND" ]
 	then
-		case "$BEFORE_COMMAND" in
-		joe*);;
-		vi*);;
-		ssh*);;
-		"git commit"*);;
-		*)
+		[ -z "$LONG_COMMAND_PATTERN" ] && LONG_COMMAND_PATTERN="^ *($LONG_COMMAND_EXCEPTIONS)"
+		if ! echo "$BEFORE_COMMAND" | grep -E "$LONG_COMMAND_PATTERN" >/dev/null 2>&1
+		then
 			FIN="Finished"
 			[ $EC -ne 0 ] && FIN="Failed"
-
-		pb_msg "$BEFORE_COMMAND" "$FIN after ($SEC s)"
-		esac
+			pb_msg "$BEFORE_COMMAND" "$FIN after ($SEC s)"
+		fi
 	fi
 	BEFORE_SECONDS=""
 	BEFORE_COMMAND=""
