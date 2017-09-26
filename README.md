@@ -64,6 +64,11 @@ pb_msg "My Job" "I finished first step"
 pb_msg "My Job" "Finished"
 ```
 
+The `pushbullet.bash` file provides also a `pb_file` function, which sends files in notifications:
+```bash
+pb_file "Title" file.jpg "Some comment"
+```
+
 ## No more mess
 The `pb_msg` function is storing the ID of the previous notification, and discarts it when you make another. This is specific to the bash shell you are running in - this means that you will get **one notification** per shell/script, and if something new happens, this notification will dissapear and a new will appear (with a buzz).
 
