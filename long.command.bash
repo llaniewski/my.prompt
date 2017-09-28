@@ -33,8 +33,9 @@ function long_command_finish {
 	fi
 	if [ "$SEC" -gt "$VERY_LONG_COMMAND" ]
 	then
-		[ -z "$LONG_COMMAND_PATTERN" ] && LONG_COMMAND_PATTERN="^ *($LONG_COMMAND_EXCEPTIONS)"
-		if ! echo "$BEFORE_COMMAND" | grep -E "$LONG_COMMAND_PATTERN" >/dev/null 2>&1
+		LONG_COMMAND_PATTERN_="$LONG_COMMAND_PATTERN"
+		[ -z "$LONG_COMMAND_PATTERN_" ] && LONG_COMMAND_PATTERN_="^ *(.*/|)($LONG_COMMAND_EXCEPTIONS)"
+		if ! echo "$BEFORE_COMMAND" | grep -E "$LONG_COMMAND_PATTERN_" >/dev/null 2>&1
 		then
 			FIN="Finished"
 			[ $EC -ne 0 ] && FIN="Failed"
