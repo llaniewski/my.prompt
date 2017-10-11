@@ -40,7 +40,7 @@ function pb_msg {
 	TITLE="$(echo "$1" | sed 's/"/\\"/g')"
 	shift
 	BODY="$(echo "$@" | sed 's/"/\\"/g')"
-	TMP=$(tempfile)
+	TMP=$(mktemp)
 	pb_clear
 	curl -s --header "Access-Token: $PB_TOKEN" \
 		--header "Content-Type: application/json" \
@@ -71,7 +71,7 @@ function pb_upload_file {
 		pb_err "File doesn't exist in pb_upload_file: $FILE"
 		return -1
 	fi
-	TMP=$(tempfile)
+	TMP=$(mktemp)
 	MIME=$(file -b --mime-type "$FILE")
 	NAME=$(basename "$FILE")
 	curl -s --header "Access-Token: $PB_TOKEN" \
@@ -103,7 +103,7 @@ function pb_file {
 	shift
 	BODY="$(echo "$@" | sed 's/"/\\"/g')"
 	pb_upload_file "$FILE" >/dev/null || return -1
-	TMP=$(tempfile)
+	TMP=$(mktemp)
 	pb_clear
 	curl -s --header "Access-Token: $PB_TOKEN" \
 		--header "Content-Type: application/json" \
