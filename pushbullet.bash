@@ -1,5 +1,7 @@
 #!/bin/bash
 
+PB_CURL_OPT="-s"
+
 function pb_err {
 	>&2 echo "$@"
 }
@@ -31,6 +33,7 @@ function pb_check_msg {
 	else
 		pb_err "Something went wrong"
 		>&2 cat $TMP
+		pb_err "--------------------"
 	fi
 	export PB_LAST
 }
@@ -42,11 +45,11 @@ function pb_msg {
 	BODY="$(echo "$@" | sed 's/"/\\"/g')"
 	TMP=$(mktemp)
 	pb_clear
-	curl -s --header "Access-Token: $PB_TOKEN" \
+	curl $PB_CURL_OPT --header "Access-Token: $PB_TOKEN" \
 		--header "Content-Type: application/json" \
 		--data-binary '{"body":"'"$BODY"'","title":"'"$TITLE"'","type":"note"}' \
 		--request POST \
-		https://api.pushbullet.com/v2/pushes >$TMP
+		https://api.pushbullet.com/v2/pushes >$TMP 2>&1
 	pb_check_msg $TMP || exit -1
 	rm $TMP
 }
@@ -54,7 +57,7 @@ function pb_msg {
 function pb_clear {
 	[ -z "$PB_LAST" ] && return 0
 	pb_token || return -1
-	curl -s --header "Access-Token: $PB_TOKEN" \
+	curl $PB_CURL_OPT --header "Access-Token: $PB_TOKEN" \
 		--header "Content-Type: application/json" \
 		--data-binary '{"dismissed":true}' \
 		--request POST \
@@ -74,7 +77,7 @@ function pb_upload_file {
 	TMP=$(mktemp)
 	MIME=$(file -b --mime-type "$FILE")
 	NAME=$(basename "$FILE")
-	curl -s --header "Access-Token: $PB_TOKEN" \
+	curl $PB_CURL_OPT --header "Access-Token: $PB_TOKEN" \
 		--header "Content-Type: application/json" \
 		--data-binary '{"file_name":"'"$NAME"'","file_type":"'"$MIME"'"}' \
 		--request POST \
@@ -86,7 +89,7 @@ function pb_upload_file {
 		pb_err "No upload_url - probably request failed"
 		return -1
 	fi
-	curl -s --request POST \
+	curl $PB_CURL_OPT --request POST \
 		--form file=@"$FILE" \
 		$UPLOAD_URL >/dev/null || return -1
 	echo $FILE_URL
@@ -105,7 +108,7 @@ function pb_file {
 	pb_upload_file "$FILE" >/dev/null || return -1
 	TMP=$(mktemp)
 	pb_clear
-	curl -s --header "Access-Token: $PB_TOKEN" \
+	curl $PB_CURL_OPT --header "Access-Token: $PB_TOKEN" \
 		--header "Content-Type: application/json" \
 		--data-binary '{"title":"'"$TITLE"'","body":"'"$BODY"'","tile_name":"'"$NAME"'","file_type":"'"$MIME"'","file_url":"'"$FILE_URL"'","type":"file"}' \
 		--request POST \
