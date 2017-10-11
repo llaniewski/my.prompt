@@ -5,7 +5,7 @@
 
 LONG_COMMAND=10
 VERY_LONG_COMMAND=30
-LONG_COMMAND_EXCEPTIONS="joe|vi|ssh|git commit"
+LONG_COMMAND_EXCEPTIONS="joe|vi|ssh|git commit|watch|top|atop"
 
 function long_command_start {
 	pb_clear
