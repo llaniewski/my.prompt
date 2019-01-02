@@ -10,6 +10,6 @@ function parse_git_describe {
 	git describe --tags 2> /dev/null
 }
 
-PS1="\[\e[0m\][\t] \[ \[\e[32m\]\h:\w \[\e[31m\]\$(parse_git_describe) \$(parse_git_branch_and_add_brackets)\[\e[0m\]\n > "
+PS1='\e[0m[\t] \e[32m\h:\w \e[31m$(parse_git_describe) $(parse_git_branch_and_add_brackets)\e[0m\n > '
 PS2="+> "
 export PS1 PS2
