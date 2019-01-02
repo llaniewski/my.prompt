@@ -7,7 +7,8 @@ function parse_git_url {
 }
 
 function parse_git_describe {
-	git describe --tags 2> /dev/null
+	git config --get remote.origin.url | sed -e 's|^git@github.com:|gh |;s|^https://github.com/|gh |;s|\.git$||' 2>/dev/null
+#	git describe --tags 2> /dev/null
 }
 
 PS1='\e[0m[\t] \e[32m\h:\w \e[31m$(parse_git_describe) $(parse_git_branch_and_add_brackets)\e[0m\n > '
